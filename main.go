@@ -29,6 +29,8 @@ func main() {
 		fmt.Printf("Successfully opened the image at %s. Proceeding...\n", imageFile)
 	}
 
+	defer img.Close()
+
 	// hash option
 	fmt.Printf("Do you want to apply a hash function to the generated string? (y/n): ")
 	fmt.Scan(&applyHash)
@@ -46,8 +48,6 @@ func main() {
 		fmt.Printf("Error: %s\n", err)
 		return
 	}
-
-	defer img.Close()
 
 	// decode the image
 	imgData, _, err := image.Decode(img)
