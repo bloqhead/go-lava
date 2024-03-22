@@ -14,7 +14,7 @@ Run the script using the go run command:
 go run main.go
 ```
 
-1. You will be asked to supply an image. The path can be relative or absolute (it will check to ensure it can locate the file).
+1. You will be asked to supply an image. The path can be relative or absolute (it will check to ensure it can locate the file). I've included `test.jpg` in the repository for testing purposes.
 2. Once the image is selected, you will be asked whether or not you want to hash the generated string (y/n).
 3. You will also be asked to set the length of the string to be generated. As an aside, if you choose to hash the string, the length of the hash will be 64 characters (I provide a note when running the script).
 4. That's it! The script will generate the string and output it to the console.
