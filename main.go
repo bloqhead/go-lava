@@ -4,14 +4,13 @@ import (
 	"fmt"
 	"image"
 	"encoding/hex"
-	"crypto/sha256"
+	"crypto/sha512"
 	_ "image/jpeg"
 	"os"
 )
 
 func main() {
 	var imageFile string
-	var desiredLength int
 	var applyHash string
 
 	// image path
@@ -32,20 +31,15 @@ func main() {
 	defer img.Close()
 
 	// hash option
-	fmt.Printf("Do you want to apply a hash function to the generated string? (y/n): ")
+	fmt.Printf("Do you want to apply a hash function to the generated string? I use SHA512 (y/n): ")
 	fmt.Scan(&applyHash)
 
 	if applyHash == "y" || applyHash == "Y" {
-		fmt.Println("Note: When applying a hash function, the generated string will have a fixed length of 64 characters.")
-		fmt.Println("Enter the desired length of the generated string (cannot exceed 64): ")
+		fmt.Printf("Applying a hash function to the generated string...\n")
+	} else if applyHash == "n" || applyHash == "N" {
+		fmt.Printf("Not applying a hash function to the generated string...\n")
 	} else {
-		fmt.Println("Enter the desired length of the generated string: ")
-	}
-
-	fmt.Scan(&desiredLength)
-
-	if err != nil {
-		fmt.Printf("Error: %s\n", err)
+		fmt.Printf("Invalid option. Please enter 'y' or 'n'.\n")
 		return
 	}
 
@@ -72,16 +66,9 @@ func main() {
 
 	// apply a hash function to the generated string if the user said yes to the option
 	if applyHash == "y" || applyHash == "Y" {
-		hash := sha256.New()
+		hash := sha512.New()
 		hash.Write([]byte(hexString))
 		hexString = hex.EncodeToString(hash.Sum(nil))
-	}
-
-	if desiredLength > len(hexString) {
-		fmt.Printf("Desired length is greater than the length of the generated string\n")
-		return
-	} else if desiredLength < len(hexString) && desiredLength > 0 {
-		hexString = hexString[:desiredLength]
 	}
 
 	// return the image data
